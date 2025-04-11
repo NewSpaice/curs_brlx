@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import imageCompression from 'browser-image-compression'; // Добавляем библиотеку для обработки изображений
 import './UserProfile.css';
 
-const API_BASE = 'http://localhost:8000/api';
+const API_BASE = process.env.REACT_APP_API_URL || '';
 
 const UserProfile = ({ onLogout }) => {
   const [user, setUser] = useState(null);
@@ -10,10 +10,61 @@ const UserProfile = ({ onLogout }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const fetchUserProfile = useCallback(async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setError('Ошибка авторизации. Войдите в систему.');
+        return;
+      }
+
+      const response = await fetch(`${API_BASE}/api/users/me`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (!response.ok) {
+        setError('Ошибка загрузки профиля.');
+        return;
+      }
+
+      const data = await response.json();
+      setUser({
+        ...data,
+        avatar: data.avatar ? `${API_BASE}${data.avatar}` : '/profile-icon.png'
+      });
+      setLoading(false);
+    } catch (error) {
+      setError('Ошибка при загрузке профиля.');
+      setLoading(false);
+    }
+  }, []);
+
+  const fetchOrders = useCallback(async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        return;
+      }
+
+      const response = await fetch(`${API_BASE}/api/orders/`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (!response.ok) {
+        return;
+      }
+
+      const data = await response.json();
+      setOrders(data);
+    } catch (error) {
+      console.error('Ошибка при загрузке заказов:', error);
+    }
+  }, []);
+
   useEffect(() => {
     fetchUserProfile();
     fetchOrders();
-  }, []);
+  }, [fetchUserProfile, fetchOrders]);
 
   // Добавим периодическое обновление заказов
   useEffect(() => {
@@ -22,75 +73,13 @@ const UserProfile = ({ onLogout }) => {
     }, 30000); // Обновление каждые 30 секунд
 
     return () => clearInterval(interval);
-  }, []);
+  }, [fetchOrders]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     onLogout(); // Вызываем переданную функцию выхода
     window.location.href = '/';  // Редирект на главную страницу
-  };
-
-  const fetchUserProfile = async () => {
-    try {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        setError('Ошибка авторизации. Войдите в систему.');
-        return;
-      }
-
-      const response = await fetch(`${API_BASE}/users/me`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      if (!response.ok) {
-        setError('Ошибка загрузки профиля.');
-        return;
-      }
-     
-      const data = await response.json();
-      if (data.avatar) {
-        console.log('ya huesos');
-        fetchAvatar(data.avatar);
-      }
-  
-      setUser(data);
-      localStorage.setItem('user', JSON.stringify(data));
-    } catch (err) {
-      setError('Ошибка загрузки профиля.');
-    }
-  };
-
-  const fetchOrders = async () => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        setError('Ошибка авторизации. Войдите в систему.');
-        setLoading(false);
-        return;
-      }
-
-      const response = await fetch(`${API_BASE}/orders`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      if (!response.ok) {
-        setError(`Ошибка сервера: ${response.status}`);
-        setLoading(false);
-        return;
-      }
-
-      const data = await response.json();
-      setOrders(data || []);
-    } catch (err) {
-      setError('Ошибка загрузки заказов.');
-      setOrders([]);
-    } finally {
-      setLoading(false);
-    }
   };
 
   const handleAvatarChange = async (event) => {
@@ -113,7 +102,7 @@ const UserProfile = ({ onLogout }) => {
       formData.append('avatar', compressedFile, file.name);
 
       const token = localStorage.getItem('token');
-      const response = await fetch(`${API_BASE}/users/avatar_upload/`, {
+      const response = await fetch(`${API_BASE}/api/users/avatar_upload/`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
         body: formData,
@@ -162,7 +151,7 @@ const UserProfile = ({ onLogout }) => {
   const handleRemoveAvatar = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`${API_BASE}/users/avatar_delete/`, {
+      const response = await fetch(`${API_BASE}/api/users/avatar_delete/`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` },
       });
