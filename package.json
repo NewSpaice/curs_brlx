@@ -50,6 +50,5 @@
   "devDependencies": {
     "nodemon": "^3.1.9",
     "style-loader": "^4.0.0"
-  },
-  "proxy": "https://cursach_brilianti.app"
+  }
 }
