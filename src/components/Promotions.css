@@ -1,0 +1,137 @@
+.promotions-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.promotions-container h1 {
+  color: #e2204a;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.promotions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.promotion-card {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.promotion-card h3 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.promotion-details {
+  margin: 15px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.discount {
+  color: #e2204a;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.dates {
+  color: #666;
+  font-size: 0.9em;
+}
+
+.apply-button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #e2204a;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.apply-button:hover {
+  background-color: #c41c3e;
+}
+
+.apply-button.used {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+.error {
+  text-align: center;
+  padding: 40px;
+  color: #e2204a;
+}
+
+.promo-card {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.promo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.promo-header h3 {
+  color: #e2204a;
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.promo-badge {
+  background-color: #e2204a;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 0.8rem;
+}
+
+.promo-footer {
+  margin-top: auto;
+  padding-top: 20px;
+}
+
+.validity {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+}
+
+.use-promo-button {
+  background-color: #e2204a;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.use-promo-button:hover {
+  background-color: #c41c3e;
+} 

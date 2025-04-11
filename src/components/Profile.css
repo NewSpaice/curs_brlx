@@ -1,0 +1,86 @@
+.profile-container {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.auth-form {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.auth-tabs {
+  display: flex;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.auth-tab {
+  flex: 1;
+  padding: 15px;
+  border: none;
+  background: none;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #666;
+}
+
+.auth-tab.active {
+  color: #20e2d8;
+  border-bottom: 2px solid #0fb3aa;
+  margin-bottom: -2px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+  font-weight: 500;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+  border-color: #0fb3aa;
+  outline: none;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 15px;
+  background: #0fb3aa;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background: #0fb3aa;
+}
+
+@media (max-width: 600px) {
+  .profile-container {
+    margin: 20px;
+  }
+  
+  .auth-form {
+    padding: 20px;
+  }
+} 

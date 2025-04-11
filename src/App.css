@@ -1,6 +1,21 @@
 .App {
   text-align: center;
 }
+.contact-info {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #76b7b9;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 14px;
+  color: black;
+  font-weight:lighter;
+  border-top: 2px solid #76b7b9;
+  font-family: Arial, sans-serif;
+  z-index: 10;
+}
 
 .App-logo {
   height: 40vmin;
@@ -35,4 +50,101 @@
   to {
     transform: rotate(360deg);
   }
+}
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #76b7b9;
+  height: 40px;
+}
+
+.nav-logo {
+  font-size: 1.5rem;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  justify-content: center;
+  gap: 5rem;
+  align-items: center;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+  padding: 25px 35px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  transition: 0.3s;
+  transform: skewX(-10deg); /* Наклон текста */
+}
+
+/* Разделительные линии */
+.nav-links a:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: -40px;
+  top: 0;
+  height: 100%;
+  width: 2px;
+  background-color: black;
+  transform: skewX(-20deg);
+}
+.nav-links a:first-child::before {
+  content: "";
+  position: absolute;
+  left: -40px;
+  top: 0;
+  height: 100%;
+  width: 2px;
+  background-color: black;
+  transform: skewX(-20deg);
+}
+
+/* Разделительная линия после последнего элемента */
+.nav-links a:last-child::after {
+  content: "";
+  position: absolute;
+  right: -40px;
+  top: 0;
+  height: 100%;
+  width: 2px;
+  background-color: black;
+  transform: skewX(-20deg);
+}
+.nav-Profile {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.nav-links a:hover {
+  color: #e2204a;
+}
+
+.profile-link {
+  display: flex;
+  align-items: center; /* Выравниваем элементы по центру */
+  text-decoration: none; /* Убираем подчеркивание */
+  color: black; /* Делаем текст обычного цвета */
+  gap: 10px; /* Добавляем промежуток между аватаром и именем */
+}
+
+.profile-icon {
+  width: 30px; /* Размер аватарки */
+  height: 30px;
+  border-radius: 50%; /* Делаем круглую */
+  object-fit: cover;
+}
+
+.profile-link span {
+  display: flex;
+  align-items: center; /* Центрируем текст по вертикали */
+  font-size: 16px; /* Размер шрифта */
+  font-weight: bold;
 }

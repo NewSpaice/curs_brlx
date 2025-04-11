@@ -1,0 +1,88 @@
+.services-container {
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.service-card {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+}
+
+.service-card h3 {
+  color: #e2204a;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+}
+
+.service-features {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.service-features li {
+  margin: 10px 0;
+  padding-left: 20px;
+  position: relative;
+}
+
+.service-features li:before {
+  content: "•";
+  color: #e2204a;
+  position: absolute;
+  left: 0;
+}
+
+.order-button {
+  background-color: #e2204a;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.order-button:hover {
+  background-color: #c41c3e;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  font-size: 1.2em;
+  color: #666;
+}
+
+.error {
+  text-align: center;
+  padding: 40px;
+  color: #dc3545;
+  font-size: 1.2em;
+}
+
+.service-card button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.service-card button:disabled:hover {
+  background-color: #ccc;
+} 
