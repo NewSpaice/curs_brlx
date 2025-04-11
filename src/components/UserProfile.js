@@ -197,7 +197,7 @@ const UserProfile = ({ onLogout }) => {
         throw new Error(errorData.error || 'Ошибка при оплате');
       }
 
-      const data = await response.json();
+      //const data = await response.json();
       // Обновляем список заказов после успешной оплаты
       setOrders(orders.map(order => 
         order.id === orderId 
