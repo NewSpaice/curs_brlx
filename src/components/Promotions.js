@@ -6,7 +6,10 @@ const Promotions = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
- 
+  useEffect(() => {
+    fetchPromotions();
+  }, []);
+
   const fetchPromotions = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -67,9 +70,6 @@ const Promotions = () => {
 
   if (loading) return <div className="loading">Загрузка акций...</div>;
   if (error) return <div className="error">{error}</div>;
-  useEffect(() => {
-    fetchPromotions();
-  }, []);
 
   return (
     <div className="promotions-container">
