@@ -19,7 +19,7 @@ function App() {
         const token = localStorage.getItem("token");
         if (!token) return;
   
-        const response = await fetch("http://localhost:8000/api/users/me", {
+        const response = await fetch("/api/users/me", {
           headers: { Authorization: `Bearer ${token}` },
         });
   
@@ -30,8 +30,9 @@ function App() {
   
         const data = await response.json();
         
-        setUser({...data,
-          avatar:`http://localhost:8000${data.avatar}`,
+        setUser({
+          ...data,
+          avatar: data.avatar ? `${process.env.REACT_APP_API_URL || ''}${data.avatar}` : '/profile-icon.png'
         }); // Обновляем состояние пользователя
       } catch (error) {
         console.error("Ошибка:", error);
@@ -44,7 +45,7 @@ function App() {
 
 
   const handleLogout = () => {
-    localStorage.removeItem('user'); // Удаляем данные пользователя при выходе
+    localStorage.removeItem('token');
     setUser(null); // Сбрасываем состояние пользователя
   };
 
@@ -54,7 +55,7 @@ function App() {
         <nav className="navigation">
           <div className="nav-logo">
             <Link to="/">
-            <img src = "brllogo.png"/>
+            <img src = "/brllogo.png" alt="Brillianti"/>
             </Link>
           </div>
           <div className="nav-links">

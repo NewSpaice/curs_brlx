@@ -53,9 +53,7 @@ const UserProfile = ({ onLogout }) => {
         console.log('ya huesos');
         fetchAvatar(data.avatar);
       }
-      else {
-        console.log('Аватара нет в данных');
-      }
+  
       setUser(data);
       localStorage.setItem('user', JSON.stringify(data));
     } catch (err) {
@@ -239,6 +237,7 @@ const UserProfile = ({ onLogout }) => {
           <img
             src={user?.avatar ? user.avatar : "./profile-icon.png"}
             className="avatar"
+            alt="Фото профиля пользователя"
           />
           {!user?.avatar && <input type="file" accept="image/*" onChange={handleAvatarChange} />}
           {user?.avatar && <button onClick={handleRemoveAvatar} className="remove-avatar-button">Удалить аватар</button>}

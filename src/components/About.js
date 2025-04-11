@@ -17,12 +17,20 @@ const About = () => {
         <h2>Наша Команда</h2>
         <div className="team-grid">
           <div className="team-member">
-            <img src="/brlmast1.jpg" alt="Мастер Александр" />
+            <img 
+              src="/brlmast1.jpg" 
+              alt="Фото Мастера Александр"
+              className="team-member-photo" 
+            />
             <h3>Александр</h3>
             <p>Главный ювелир</p>
           </div>
           <div className="team-member">
-            <img src="/brlmast2.jpg" alt="Мастер Елена" />
+            <img 
+              src="/brlmast2.jpg" 
+              alt="Фото Мастера Елена"
+              className="team-member-photo" 
+            />
             <h3>Елена</h3>
             <p>Дизайнер украшений</p>
           </div>

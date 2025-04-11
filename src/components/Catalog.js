@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import {productService} from './productService';
-import {orderService} from './orderService';
+// Удаляем неиспользуемые импорты
+// import { productService } from '../api/productService';
+// import { orderService } from '../api/orderService';
 import './Catalog.css';
 import OrderModal from './OrderModal';
 
@@ -23,14 +24,16 @@ const Catalog = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/products/');
+      const response = await fetch('/api/products/');
       if (!response.ok) {
         throw new Error('Ошибка при загрузке товаров');
       }
       const data = await response.json();
-      setProducts(data);
+      setProducts(data.map(product => ({
+        ...product,
+        image: product.image ? `${process.env.REACT_APP_API_URL || ''}${product.image}` : '/product-placeholder.png'
+      })));
       
-      // Получаем уникальные категории из товаров
       const uniqueCategories = [...new Set(data.map(product => product.category))];
       setCategories(uniqueCategories);
       
@@ -73,24 +76,29 @@ const Catalog = () => {
 
   const handleSubmitOrder = async (orderData) => {
     try {
-      const response = await fetch('http://localhost:8000/api/orders/', {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('Необходима авторизация');
+      }
+
+      const response = await fetch('/api/orders/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(orderData)
       });
 
-      if (response.ok) {
-        alert('Заказ успешно создан!');
-        setShowModal(false);
-      } else {
+      if (!response.ok) {
         throw new Error('Ошибка при создании заказа');
       }
+
+      alert('Заказ успешно создан!');
+      setShowModal(false);
     } catch (error) {
       console.error('Error:', error);
-      alert('Произошла ошибка при создании заказа');
+      alert(error.message || 'Произошла ошибка при создании заказа');
     }
   };
 

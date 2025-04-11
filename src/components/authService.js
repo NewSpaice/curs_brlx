@@ -1,4 +1,4 @@
-import { endpoints, getAuthHeaders } from '../api/config';
+import { endpoints } from '../api/config';
 
 export const authService = {
     async login(username, password) {

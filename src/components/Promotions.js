@@ -8,13 +8,20 @@ const Promotions = () => {
 
   useEffect(() => {
     fetchPromotions();
-  }, []);
+  }, [fetchPromotions]);
 
   const fetchPromotions = async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/promotions/', {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setError('Необходима авторизация');
+        setLoading(false);
+        return;
+      }
+
+      const response = await fetch('/api/promotions/', {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'Authorization': `Bearer ${token}`
         }
       });
 
@@ -23,32 +30,38 @@ const Promotions = () => {
       }
 
       const data = await response.json();
-      setPromotions(data);
+      setPromotions(data.map(promotion => ({
+        ...promotion,
+        image: promotion.image ? `${process.env.REACT_APP_API_URL || ''}${promotion.image}` : '/promotion-placeholder.png'
+      })));
       setLoading(false);
     } catch (error) {
-      setError('Не удалось загрузить акции');
+      setError(error.message || 'Не удалось загрузить акции');
       setLoading(false);
     }
   };
 
   const handleApplyPromotion = async (promotionId) => {
     try {
-      const response = await fetch(`http://localhost:8000/api/promotions/${promotionId}/apply/`, {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('Необходима авторизация');
+      }
+
+      const response = await fetch(`/api/promotions/${promotionId}/apply/`, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         }
       });
 
-      const data = await response.json();
-
       if (!response.ok) {
+        const data = await response.json();
         throw new Error(data.error || 'Ошибка при активации акции');
       }
 
-      // Обновляем список акций после успешной активации
-      fetchPromotions();
+      await fetchPromotions();
       alert('Акция успешно активирована! Она будет доступна при оформлении следующего заказа.');
     } catch (error) {
       alert(error.message);
@@ -82,6 +95,11 @@ const Promotions = () => {
                promotion.is_activated ? 'Акция активирована' : 
                'Активировать акцию'}
             </button>
+            <img 
+              src={promotion.image} 
+              alt={`Акция: ${promotion.name}`}
+              className="promotion-image" 
+            />
           </div>
         ))}
       </div>
